@@ -46,12 +46,15 @@ class Grafo:
     def obtener_aristas(self, nodo):
         return self.aristas[nodo]
     
-    # Algoritmo de Prim
+    # Algoritmo de Prim para ver el camino que recorre el patógeno.
     def prim(self, nodo_inicial):
         visitados = set() # Conjunto de nodos visitados
         visitados.add(nodo_inicial) # Agregando el nodo inicial al conjunto de nodos visitados
         aristas_seleccionadas = [] # Lista de aristas seleccionadas
         cont = 0
+        
+        print(f"\nPaso de Tiempo, hora: {cont}")
+        self.pintar_grafo()
         
         # Se recorre el grafo hasta que no queden aristas por recorrer
         while cont <= self.Arista:
@@ -78,9 +81,18 @@ class Grafo:
                 visitados.add(arista_minima[1])
                 aristas_seleccionadas.append(arista_minima)
                 
+            # Se pinta el paso del tiempo de la población
+            print(f"\nPaso de Tiempo, hora: {cont + 1}")
+            self.pintar_grafo()
+            
             cont += 1
         
         return aristas_seleccionadas
+    
+    # Pinta el nodo y su estado
+    def pintar_grafo(self):
+        for nodo in self.nodos:
+            print(f"Nodo {nodo.nombre}: Estado: {nodo.estado}")
     
 class Main:
     def __init__(self):
@@ -92,6 +104,10 @@ class Main:
         nodo_d = Nodo("D")
         nodo_e = Nodo("E")
         nodo_f = Nodo("F")
+        nodo_g = Nodo("G")
+        nodo_h = Nodo("H")
+        nodo_i = Nodo("I")
+        nodo_j = Nodo("J")
         
         # Agregando nodos al grafo y creando aristas
         self.grafo.agregar_nodo(nodo_a)
@@ -99,14 +115,22 @@ class Main:
         self.grafo.agregar_nodo(nodo_c)
         self.grafo.agregar_nodo(nodo_d)
         self.grafo.agregar_nodo(nodo_e)
-        self.grafo.agregar_nodo(nodo_f) # Nodo aislado
-        self.grafo.agregar_arista(nodo_a, nodo_b, 2)
-        self.grafo.agregar_arista(nodo_a, nodo_d, 7)
-        self.grafo.agregar_arista(nodo_a, nodo_e, 5)
-        self.grafo.agregar_arista(nodo_b, nodo_c, 4)
+        self.grafo.agregar_nodo(nodo_f)
+        self.grafo.agregar_nodo(nodo_g)
+        self.grafo.agregar_nodo(nodo_h)
+        self.grafo.agregar_nodo(nodo_i) # Nodo aislado
+        self.grafo.agregar_nodo(nodo_j)
+        self.grafo.agregar_arista(nodo_a, nodo_h, 2)
+        self.grafo.agregar_arista(nodo_a, nodo_e, 4)
+        self.grafo.agregar_arista(nodo_a, nodo_f, 5)
+        self.grafo.agregar_arista(nodo_a, nodo_b, 3)
+        self.grafo.agregar_arista(nodo_f, nodo_g, 4)
+        self.grafo.agregar_arista(nodo_f, nodo_d, 1)
+        self.grafo.agregar_arista(nodo_d, nodo_c, 3)
+        self.grafo.agregar_arista(nodo_b, nodo_j, 3)
         
         # Probabilidad de infección del patógeno
-        self.grafo.porcentaje_infeccion('10%')
+        self.grafo.porcentaje_infeccion('40%')
         
         # Sumlando la propagación del patógeno
         self.prim(nodo_a)
@@ -124,7 +148,7 @@ class Main:
         
         # Si el tamaño de la lista es mayor a 0, significa que se propagó el patógeno
         else: 
-            print("Camino recorrido por el patógeno:")
+            print("\nCamino recorrido por el patógeno:")
             # Imprime las aristas seleccionadas, del camino recorrido por el patógeno con los nodos que infecto
             for arista in aristas_seleccionadas:
                 print(f"{arista[0]} - {arista[1]} : {self.grafo.aristas[arista[0]][arista[1]]}")
@@ -133,7 +157,7 @@ class Main:
             print(f"Costo que tuvo el camino del patógeno al infectar: {pesoTotal}")
             
             # Imprime los nodos infectados
-            print("Nodos infectados:")
+            print("\nNodos infectados:")
             for nodo in self.grafo.nodos:
                 if nodo.estado == "infectado":
                     print(nodo)
