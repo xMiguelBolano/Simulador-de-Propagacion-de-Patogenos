@@ -1,2 +1,3 @@
 # Simulador de Propagación de Patógenos 
-Programa que simula mediante grafos la propagación de un patógeno al intentar infectar una población
+Desarrollo de una simulación interactiva de la propagación de un patógeno utilizando teoría de grafos, donde cada nodo representa a un individuo y cada arista modela un posible contacto que puede transmitir la infección. El sistema permite configurar la probabilidad de contagio, el nodo inicial infectado y la estructura de la red, generando una visualización dinámica del proceso. Este proyecto tiene como objetivo analizar y comprender el comportamiento de enfermedades transmisibles en diferentes escenarios, así como explorar estrategias de prevención y control mediante un enfoque computacional.
+[WEB](https://contagionlab.streamlit.app/)
